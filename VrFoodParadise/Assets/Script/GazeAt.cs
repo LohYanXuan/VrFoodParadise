@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class GazeAt : MonoBehaviour
 {
+    private Renderer myRenderer;
     Material oriMat;
     public Material gazeMat;
 
@@ -12,7 +13,8 @@ public class GazeAt : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        oriMat = GetComponent<Renderer>().material;
+        myRenderer = GetComponent<Renderer>();
+        oriMat = myRenderer.material;
 
         isGaze = false;
     }
@@ -20,7 +22,14 @@ public class GazeAt : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isGaze)
+        {
+            myRenderer.material = gazeMat;
+        }
+        else
+        {
+            myRenderer.material = oriMat;
+        }
     }
 
     public void SetGazeAt(bool gazeAt)

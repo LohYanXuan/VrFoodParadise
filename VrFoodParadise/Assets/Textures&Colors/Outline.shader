@@ -2,15 +2,16 @@
 {
     Properties
     {
+        _Color("Main Color", Color) = (0.5,0.5,0.5,1)
         _MainTex ("Texture", 2D) = "white" {}
         _OutlineColor("Outline color", Color) = (0,0,0,1)
         _OutlineWidth("Outline width", Range(1.0,3.0)) = 1.01
     }
 
         CGINCLUDE
-#include "UnityCG.cginc"
+        #include "UnityCG.cginc"
 
-            struct appdata
+        struct appdata
         {
             float4 vertex : POSITION;
             float3 normal : NORMAL;
@@ -25,15 +26,15 @@
         float4 _OutlineColor;
         float _OutlineWidth;
 
-        _OutlineColor("Outline color", Color) = (0, 0, 0, 1)
-        _OutlineWidth("Outline width", Range(1.0, 3.0)) = 1.01
+        /*_OutlineColor("Outline color", Color) = (0, 0, 0, 1)
+        _OutlineWidth("Outline width", Range(1.0, 3.0)) = 1.01*/
 
         v2f vert(appdata v)
         {
             v.vertex.xyz *= _OutlineWidth;
 
             v2f o;
-            o.pos = UnityOnjectToClipPos(v.vertex);
+            o.pos = UnityObjectToClipPos(v.vertex);
             return o;
         }
 
@@ -49,19 +50,35 @@
                 #pragma vertex vert
                 #pragma fragment frag
 
-                half4 frag(v2f 1) : COLOR
+                half4 frag(v2f i) : COLOR
                 {
-                return _OutlineColor;
+                    return _OutlineColor;
                 }
+
+                ENDCG
             }
-            ENDCG
+            Pass //Normal render
+            {
+                ZWrite On
+
+                Material
+                {
+                    Diffuse[_Color]
+                    Ambient[_Color]
+                }
+
+                Lighting On
+
+                SetTexture[_MainTex]
+                {
+                    ConstantColor[_Color]
+                }
+                    
+                SetTexture[_MainTex]
+                {
+                    Combine previous * primary DOUBLE
+                }
+             }
         }
 
-        Pass //Normal render
-        {
-            ZWrite On
-
-            Material
-        }
-    }
 }
