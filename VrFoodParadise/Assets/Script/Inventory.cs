@@ -13,11 +13,19 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            items.Clear();
+        }
     }
 
     public void InsertItems(GameObject objects)
     {
         items.Add(objects);
+    }
+
+    public void ClearItems()
+    {
+        items.Clear();
     }
 }
