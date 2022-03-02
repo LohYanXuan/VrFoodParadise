@@ -4,23 +4,46 @@ using UnityEngine.UI;
 
 public class GazeAt : MonoBehaviour
 {
+    [Header("GameManager - Inventory")]
+    public GameObject gameInventory;
+    private Inventory inventory;
+
+    [Header("Object Settings")]
     private Renderer myRenderer;
     Material oriMat;
     public Material gazeMat;
 
+    private float startTime;
+    private float timer;
+    bool isResetTimer;
+
     public bool isGaze;
 
-    // Start is called before the first frame update
     void Start()
     {
+        inventory = gameInventory.GetComponent<Inventory>();
         myRenderer = GetComponent<Renderer>();
         oriMat = myRenderer.material;
 
+        startTime = 0;
+        timer = 0;
+
+        isResetTimer = false;
         isGaze = false;
     }
 
-    // Update is called once per frame
     void Update()
+    {
+        OutlineWhenGaze();
+        StoreInInventory();
+    }
+
+    public void SetGazeAt(bool gazeAt)
+    {
+        isGaze = gazeAt;
+    }
+
+    private void OutlineWhenGaze()
     {
         if (isGaze)
         {
@@ -32,8 +55,32 @@ public class GazeAt : MonoBehaviour
         }
     }
 
-    public void SetGazeAt(bool gazeAt)
+    private void StoreInInventory()
     {
-        isGaze = gazeAt;
+        if (isGaze)
+        {
+            if (!isResetTimer)
+            {
+                startTime = Time.time;
+                timer = Time.time;
+                isResetTimer = true;
+            }
+            else
+            {
+                timer += Time.deltaTime;
+
+                if (timer - startTime >= 2)
+                {
+                    inventory.InsertItems(this.gameObject);
+                    gameObject.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            startTime = 0;
+            timer = 0;
+            isResetTimer = false;
+        }
     }
 }
