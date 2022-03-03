@@ -72,6 +72,7 @@ public class GazeAt : MonoBehaviour
                 if (timer - startTime >= 2)
                 {
                     inventory.InsertItems(this.gameObject);
+                    isGaze = false;
                     gameObject.SetActive(false);
                 }
             }

@@ -6,6 +6,8 @@ public class Inventory : MonoBehaviour
 {
     public List<GameObject> items = new List<GameObject>();
 
+    int i = 0;
+
     void Start()
     {
         
@@ -15,7 +17,7 @@ public class Inventory : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            items.Clear();
+            ClearItems();
         }
     }
 
@@ -26,6 +28,11 @@ public class Inventory : MonoBehaviour
 
     public void ClearItems()
     {
+        for (i = 0; i < items.Count; i++)
+        {
+            items[i].gameObject.SetActive(true);
+        }
+
         items.Clear();
     }
 }
