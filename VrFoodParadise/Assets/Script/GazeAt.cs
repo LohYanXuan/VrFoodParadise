@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -13,6 +14,9 @@ public class GazeAt : MonoBehaviour
     Material oriMat;
     public Material gazeMat;
 
+   
+
+
     private float startTime;
     private float timer;
     bool isResetTimer;
@@ -21,9 +25,12 @@ public class GazeAt : MonoBehaviour
 
     void Start()
     {
+
         inventory = gameInventory.GetComponent<Inventory>();
         myRenderer = GetComponent<Renderer>();
         oriMat = myRenderer.material;
+
+        
 
         startTime = 0;
         timer = 0;
