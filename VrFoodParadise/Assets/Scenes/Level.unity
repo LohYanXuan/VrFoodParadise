@@ -3965,7 +3965,7 @@ MonoBehaviour:
   clones: []
   holdPosition: {fileID: 369973621}
   gazeMat: {fileID: 2100000, guid: 8b5884f8dc7ce4845a4284dba0e4a32a, type: 2}
-  timer: 2
+  timer: 0
   timerTimer: 0
   isGaze: 0
 --- !u!114 &369973626
