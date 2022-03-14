@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class SpawnDish : MonoBehaviour
 {
+    Inventory inventory;
 
     [Header("GameManager - SpawnIngridient")]
     public GameObject ingridientType;
@@ -28,7 +29,8 @@ public class SpawnDish : MonoBehaviour
 
     void Start()
     {
-       
+        inventory = Inventory.instance;
+
         myRenderer = GetComponent<Renderer>();
         oriMat = myRenderer.material;
         SetGazeAt(false);
@@ -86,6 +88,13 @@ public class SpawnDish : MonoBehaviour
         clones.Add(Instantiate(ingridientType, position, Quaternion.identity));
         SetGazeAt(false);
 
+        /* "SetGazeAt(false);" wont stop spawning cuz u set false here, then "event trigger" still running n set back to true
+         * the order of execution is event trigger then update, thus ur "false" hvnt reset in update but "event trigger" ady chg it back to true
+         * then when update comes, it continues true*/
+
+
+        //Below is script that handles all list, u hv dif button but all nid save in 1 same list for checking n ur list is each button 1 list
+        //inventory.InsertIngredients(Instantiate(ingridientType, position, Quaternion.identity));
     }
 
 

@@ -5,17 +5,12 @@ using UnityEngine.UI;
 
 public class GazeAt : MonoBehaviour
 {
-    [Header("GameManager - Inventory")]
-    public GameObject gameInventory;
-    private Inventory inventory;
+    Inventory inventory;
 
     [Header("Object Settings")]
     private Renderer myRenderer;
     Material oriMat;
     public Material gazeMat;
-
-   
-
 
     private float startTime;
     private float timer;
@@ -25,12 +20,10 @@ public class GazeAt : MonoBehaviour
 
     void Start()
     {
+        inventory = Inventory.instance;
 
-        inventory = gameInventory.GetComponent<Inventory>();
         myRenderer = GetComponent<Renderer>();
         oriMat = myRenderer.material;
-
-        
 
         startTime = 0;
         timer = 0;
@@ -78,7 +71,7 @@ public class GazeAt : MonoBehaviour
 
                 if (timer - startTime >= 2)
                 {
-                    inventory.InsertItems(this.gameObject);
+                    inventory.InsertFoods(this.gameObject);
                     isGaze = false;
                     gameObject.SetActive(false);
                 }

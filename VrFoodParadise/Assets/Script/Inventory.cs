@@ -4,7 +4,25 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public List<GameObject> items = new List<GameObject>();
+    //Singleton
+    #region Singleton
+
+    public static Inventory instance;
+
+    private void Awake()
+    {
+        {
+            instance = this;
+        }
+    }
+
+    #endregion
+
+    [Header("Food list")]
+    public List<GameObject> foods = new List<GameObject>();
+    
+    [Header("Ingredient list")]
+    public List<GameObject> ingredients = new List<GameObject>();
 
     int i = 0;
 
@@ -17,22 +35,44 @@ public class Inventory : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            ClearItems();
+            ClearFoods();
         }
     }
 
-    public void InsertItems(GameObject objects)
+    public void InsertFoods(GameObject objects)
     {
-        items.Add(objects);
+        foods.Add(objects);
     }
 
-    public void ClearItems()
+    public void ClearFoods()
     {
-        for (i = 0; i < items.Count; i++)
+        for (i = 0; i < foods.Count; i++)
         {
-            items[i].gameObject.SetActive(true);
+            foods[i].gameObject.SetActive(true);
         }
 
-        items.Clear();
+        foods.Clear();
+    }
+
+    public void InsertIngredients(GameObject objects)
+    {
+        ingredients.Add(objects);
+    }
+
+    public void ClearIngredients()
+    {
+        for (i = 0; i < ingredients.Count; i++)
+        {
+            ingredients[i].gameObject.SetActive(true);
+        }
+
+        ingredients.Clear();
+    }
+
+    //Remove specific object at specific index
+    public void ListRemoveAtIndex(List<GameObject> list, int index)
+    {
+        Destroy(list[index]);
+        list.RemoveAt(index);
     }
 }
