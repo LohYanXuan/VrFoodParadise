@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BackButton : MonoBehaviour
+public class CheckOutButton : MonoBehaviour
 {
     Inventory inventory;
+    [SerializeField] private GameObject food;
 
     [SerializeField] private Collider storeCollider;
     [SerializeField] private GameObject menuPanel;
@@ -19,7 +20,7 @@ public class BackButton : MonoBehaviour
     [Header("LoadingUI")]
     bool gvrStatus;
     float gvrTimer;
-    public Image imgGaze;
+    [SerializeField] private Image imgGaze;
 
     public void SetGazeAt(bool gazeAt)
     {
@@ -84,7 +85,7 @@ public class BackButton : MonoBehaviour
                     gvrTimer = 0;
                     imgGaze.fillAmount = 0;
 
-                    inventory.ClearIngredients();
+                    AssignRecipe();
                     menuPanel.SetActive(false);
                     storeCollider.enabled = true;
                 }
@@ -96,5 +97,18 @@ public class BackButton : MonoBehaviour
             timer = 0;
             isResetTimer = false;
         }
+    }
+
+    private void AssignRecipe()
+    {
+        FoodRecipe foodRecipe = food.GetComponent<FoodRecipe>();
+
+        for (int i = 0; i < inventory.ingredients.Count; i++)
+        {
+            foodRecipe.ingredientInIt.Add(inventory.ingredients[i].GetComponent<GazeMenu>().tagName.ToString());
+        }
+
+        inventory.InsertFoods(food);
+        inventory.ClearIngredients();
     }
 }

@@ -37,6 +37,10 @@ public class Inventory : MonoBehaviour
         {
             ClearFoods();
         }
+
+        Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[0]);
+        Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[1]);
+        Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[2]);
     }
 
     public void InsertFoods(GameObject objects)
@@ -57,15 +61,14 @@ public class Inventory : MonoBehaviour
     public void InsertIngredients(GameObject objects)
     {
         ingredients.Add(objects);
-        Debug.Log(objects.GetComponent<GazeMenu>().tagName);
     }
 
     public void ClearIngredients()
     {
-        for (i = 0; i < ingredients.Count; i++)
-        {
-            ingredients[i].gameObject.SetActive(true);
-        }
+        //for (i = 0; i < ingredients.Count; i++)
+        //{
+        //    ingredients[i].gameObject.SetActive(true);
+        //}
 
         ingredients.Clear();
     }
