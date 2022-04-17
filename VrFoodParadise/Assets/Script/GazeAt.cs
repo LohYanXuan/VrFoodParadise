@@ -3,9 +3,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class GazeAt : MonoBehaviour
+public abstract class GazeAt : MonoBehaviour
 {
     Inventory inventory;
+    public enum listType { food, ingredient, none };
+    public listType inventoryType;
 
     [Header("Object Settings")]
     private Renderer myRenderer;
@@ -16,14 +18,17 @@ public class GazeAt : MonoBehaviour
     private float timer;
     bool isResetTimer;
 
-    public bool isGaze;
+    protected bool isGaze;
 
-    void Start()
+    public void Initialize()
     {
         inventory = Inventory.instance;
 
-        myRenderer = GetComponent<Renderer>();
-        oriMat = myRenderer.material;
+        if (GetComponent<Renderer>() != null)
+        {
+            myRenderer = GetComponent<Renderer>();
+            oriMat = myRenderer.material;
+        }
 
         startTime = 0;
         timer = 0;
@@ -32,11 +37,11 @@ public class GazeAt : MonoBehaviour
         isGaze = false;
     }
 
-    void Update()
-    {
-        OutlineWhenGaze();
-        StoreInInventory();
-    }
+    //void Update()
+    //{
+    //    OutlineWhenGaze();
+    //    StoreInInventory();
+    //}
 
     public void SetGazeAt(bool gazeAt)
     {
@@ -45,17 +50,20 @@ public class GazeAt : MonoBehaviour
 
     private void OutlineWhenGaze()
     {
-        if (isGaze)
+        if (gazeMat != null)
         {
-            myRenderer.material = gazeMat;
-        }
-        else
-        {
-            myRenderer.material = oriMat;
+            if (isGaze)
+            {
+                myRenderer.material = gazeMat;
+            }
+            else
+            {
+                myRenderer.material = oriMat;
+            }
         }
     }
 
-    private void StoreInInventory()
+    public void StoreInInventory()
     {
         if (isGaze)
         {
@@ -71,9 +79,55 @@ public class GazeAt : MonoBehaviour
 
                 if (timer - startTime >= 2)
                 {
-                    inventory.InsertFoods(this.gameObject);
+                    if (inventoryType == listType.food)
+                    {
+                        inventory.InsertFoods(this.gameObject);
+                    }
+                    if (inventoryType == listType.ingredient)
+                    {
+                        inventory.InsertIngredients(this.gameObject);
+                    }
+
+                    //Reset timer for keep gazing at same thing
+                    //isGaze = false;
+                    startTime = 0;
+                    timer = 0;
+                    isResetTimer = false;
+
+                    //gameObject.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            startTime = 0;
+            timer = 0;
+            isResetTimer = false;
+        }
+    }
+
+    public void CloseCollider(Collider collider)
+    {
+        if (isGaze)
+        {
+            if (!isResetTimer)
+            {
+                startTime = Time.time;
+                timer = Time.time;
+                isResetTimer = true;
+            }
+            else
+            {
+                timer += Time.deltaTime;
+
+                if (timer - startTime >= 2)
+                {
                     isGaze = false;
-                    gameObject.SetActive(false);
+                    startTime = 0;
+                    timer = 0;
+                    isResetTimer = false;
+
+                    collider.enabled = false;
                 }
             }
         }

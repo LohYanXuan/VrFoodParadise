@@ -57,6 +57,7 @@ public class Inventory : MonoBehaviour
     public void InsertIngredients(GameObject objects)
     {
         ingredients.Add(objects);
+        Debug.Log(objects.GetComponent<GazeMenu>().tagName);
     }
 
     public void ClearIngredients()
