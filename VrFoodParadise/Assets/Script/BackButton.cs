@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BackButton : MonoBehaviour
 {
@@ -13,22 +14,48 @@ public class BackButton : MonoBehaviour
 
     private bool isGaze;
 
+    [Header("LoadingUI")]
+    bool gvrStatus;
+    float gvrTimer;
+    public Image imgGaze;
+
     public void SetGazeAt(bool gazeAt)
     {
         isGaze = gazeAt;
+    }
+
+    public void GVROn()
+    {
+        gvrStatus = true;
+    }
+
+    public void GVROff()
+    {
+        gvrStatus = false;
+        gvrTimer = 0;
+        imgGaze.fillAmount = 0;
     }
 
     void Start()
     {
         startTime = 0;
         timer = 0;
+        gvrTimer = 0;
 
         isResetTimer = false;
         isGaze = false;
+        gvrStatus = false;
     }
 
     void Update()
     {
+        if (gvrStatus)
+        {
+            //Fill loading UI
+            gvrTimer += Time.deltaTime;
+            imgGaze.fillAmount = gvrTimer / 2f;
+        }
+
         if (isGaze)
         {
             if (!isResetTimer)
@@ -49,8 +76,12 @@ public class BackButton : MonoBehaviour
                     timer = 0;
                     isResetTimer = false;
 
-                    storeCollider.enabled = true;
+                    gvrStatus = false;
+                    gvrTimer = 0;
+                    imgGaze.fillAmount = 0;
+
                     menuPanel.SetActive(false);
+                    storeCollider.enabled = true;
                 }
             }
         }

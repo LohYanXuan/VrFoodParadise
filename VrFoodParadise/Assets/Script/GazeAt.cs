@@ -9,7 +9,7 @@ public abstract class GazeAt : MonoBehaviour
     public enum listType { food, ingredient, none };
     public listType inventoryType;
 
-    [Header("Object Settings")]
+    [Header("ObjectSettings")]
     private Renderer myRenderer;
     Material oriMat;
     public Material gazeMat;
@@ -19,6 +19,11 @@ public abstract class GazeAt : MonoBehaviour
     bool isResetTimer;
 
     protected bool isGaze;
+
+    [Header("LoadingUI")]
+    bool gvrStatus;
+    float gvrTimer;
+    public Image imgGaze;
 
     public void Initialize()
     {
@@ -32,9 +37,11 @@ public abstract class GazeAt : MonoBehaviour
 
         startTime = 0;
         timer = 0;
+        gvrTimer = 0;
 
         isResetTimer = false;
         isGaze = false;
+        gvrStatus = false;
     }
 
     //void Update()
@@ -46,6 +53,18 @@ public abstract class GazeAt : MonoBehaviour
     public void SetGazeAt(bool gazeAt)
     {
         isGaze = gazeAt;
+    }
+
+    public void GVROn()
+    {
+        gvrStatus = true;
+    }
+
+    public void GVROff()
+    {
+        gvrStatus = false;
+        gvrTimer = 0;
+        imgGaze.fillAmount = 0;
     }
 
     private void OutlineWhenGaze()
@@ -65,6 +84,13 @@ public abstract class GazeAt : MonoBehaviour
 
     public void StoreInInventory()
     {
+        if (gvrStatus)
+        {
+            //Fill loading UI
+            gvrTimer += Time.deltaTime;
+            imgGaze.fillAmount = gvrTimer / 2f;
+        }
+
         if (isGaze)
         {
             if (!isResetTimer)
@@ -94,6 +120,9 @@ public abstract class GazeAt : MonoBehaviour
                     timer = 0;
                     isResetTimer = false;
 
+                    gvrTimer = 0;
+                    imgGaze.fillAmount = 0;
+
                     //gameObject.SetActive(false);
                 }
             }
@@ -108,6 +137,13 @@ public abstract class GazeAt : MonoBehaviour
 
     public void CloseCollider(Collider collider)
     {
+        if (gvrStatus)
+        {
+            //Fill loading UI
+            gvrTimer += Time.deltaTime;
+            imgGaze.fillAmount = gvrTimer / 2f;
+        }
+
         if (isGaze)
         {
             if (!isResetTimer)
@@ -127,6 +163,10 @@ public abstract class GazeAt : MonoBehaviour
                     timer = 0;
                     isResetTimer = false;
 
+                    //gvrStatus = false;
+                    gvrTimer = 0;
+                    imgGaze.fillAmount = 0;
+
                     collider.enabled = false;
                 }
             }
@@ -136,6 +176,7 @@ public abstract class GazeAt : MonoBehaviour
             startTime = 0;
             timer = 0;
             isResetTimer = false;
+
         }
     }
 }

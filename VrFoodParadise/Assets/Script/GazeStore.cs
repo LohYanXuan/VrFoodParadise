@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GazeStore : GazeAt
 {
-    private Collider storeCollider;
+    [SerializeField] private BoxCollider storeCollider;
     [SerializeField] private GameObject menuPanel;
 
     void Start()
     {
-        storeCollider = this.GetComponent<Collider>();
+        //storeCollider = this.GetComponent<BoxCollider>();
         menuPanel.SetActive(false);
 
         Initialize();
@@ -25,6 +25,7 @@ public class GazeStore : GazeAt
         }
         else
         {
+            GVROff();
             menuPanel.SetActive(true);
         }
     }
