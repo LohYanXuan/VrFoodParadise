@@ -7,9 +7,6 @@ using System.Collections;
 public class Customer : MonoBehaviour
 {
     [Header("Customer's Order")]
-    [SerializeField] float totalSeconds = 0;
-    float elapsedSeconds = 0;
-    bool running = false;
     //public int shuffle;
     [SerializeField] int minOrder = 3, maxOrder = 7;
     [SerializeField] int minQ = 1, maxQ = 5;
@@ -31,6 +28,14 @@ public class Customer : MonoBehaviour
     [SerializeField] private float totalTime = 2;
     bool gvrStatus;
     float gvrTimer;
+
+    [Header("Timer UI")]
+    [SerializeField] float totalSeconds = 0;
+    float elapsedSeconds = 0;
+    bool running = false;
+    [SerializeField] private Image uiFillImage;
+    [SerializeField] private TextMeshProUGUI uiText;
+    
 
     //List is for customer to store & output their orders
     // Orders are randomly churned. Randomness affects 
@@ -189,5 +194,13 @@ public class Customer : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    private void ResetTimer()
+    {
+        uiText.text = "00:00";
+        uiFillImage.fillAmount = 0f;
+
+        
     }
 }

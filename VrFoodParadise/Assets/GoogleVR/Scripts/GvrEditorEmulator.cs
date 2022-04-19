@@ -53,9 +53,6 @@ public class GvrEditorEmulator : MonoBehaviour
     private float mouseX = 0;
     private float mouseY = 0;
     private float mouseZ = 0;
-    public GameObject player;
-    public GameObject cam;
-    public float copyMouseX=0;
     /// <summary>Gets the instance for this singleton class.</summary>
     /// <value>The instance for this singleton class.</value>
     public static GvrEditorEmulator Instance
@@ -117,9 +114,6 @@ public class GvrEditorEmulator : MonoBehaviour
             {
                 mouseX -= 360;
             }
-
-            copyMouseX = mouseX;
-            //player.transform.Rotate(Vector3.up * mouseX);
             mouseY -= Input.GetAxis(AXIS_MOUSE_Y) * 2.4f;
             mouseY = Mathf.Clamp(mouseY, -85, 85);
         }

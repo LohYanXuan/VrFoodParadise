@@ -15,13 +15,9 @@ public class PlayerMovement : MonoBehaviour
     public float groudnDistance = 0.4f;
     public LayerMask groundMask;
     public GameObject playerCam;
-    public GvrEditorEmulator emulatorScript;
-    //private float xRotation=0f;
 
     void Update()
     {
-        //transform.Rotate(Vector3.up * playerCam.transform.rotation.y);
-        //RotatePlayer();
         isGrounded = Physics.CheckSphere(groundCheck.position, groudnDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
@@ -31,28 +27,17 @@ public class PlayerMovement : MonoBehaviour
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-        Vector3 move = transform.right * x + transform.forward * z;
+        Vector3 move = playerCam.transform.right * x + playerCam.transform.forward * z;
         controller.Move(move * speed * Time.deltaTime);
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
-    }
+        //if (Input.GetButton("Dpad_Up"))
+        //{
+        //    //transform.position += Vector3.forward * Time.deltaTime * speed;
+        //    Vector3 forward = playerCam.transform.TransformDirection(Vector3.forward);
 
-    private void RotatePlayer()
-    {
-        //eularAngY = playerCam.transform.localEulerAngles.y;
-        //var characterRotation = playerCam.transform.rotation;
-        float deg = emulatorScript.copyMouseX * Mathf.Rad2Deg;
-        //transform.rotation = Quaternion.Euler(0, deg, 0);
-        //characterRotation.x = 0;
-        //characterRotation.z = 0;
-        //float deg = emulatorScript.copyMouseX * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(deg, Vector3.up);
+        //    controller.SimpleMove(forward * speed);
+        //}
     }
-
-    //private void RotatePlayer()
-    //{
-    //    float mouseX = Input.GetAxis("Mouse X") * 100f * Time.deltaTime;
-    //    transform.Rotate(Vector3.up * mouseX);
-    //} 
 }
