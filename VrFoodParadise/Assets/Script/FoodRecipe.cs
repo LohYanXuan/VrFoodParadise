@@ -5,4 +5,9 @@ using UnityEngine;
 public class FoodRecipe : MonoBehaviour
 {
     public List<string> ingredientInIt = new List<string>();
+
+    private void Awake()
+    {
+        ingredientInIt.Clear();
+    }
 }

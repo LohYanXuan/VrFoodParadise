@@ -50,10 +50,10 @@ public class Inventory : MonoBehaviour
 
     public void ClearFoods()
     {
-        for (i = 0; i < foods.Count; i++)
-        {
-            foods[i].gameObject.SetActive(true);
-        }
+        //for (i = 0; i < foods.Count; i++)
+        //{
+        //    foods[i].gameObject.SetActive(true);
+        //}
 
         foods.Clear();
     }
