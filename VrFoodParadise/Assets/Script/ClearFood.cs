@@ -7,6 +7,11 @@ public class ClearFood : MonoBehaviour
 {
     Inventory inventory;
 
+    [Header("ObjectSettings")]
+    private Renderer myRenderer;
+    Material oriMat;
+    public Material gazeMat;
+
     private float startTime;
     private float timer;
     private bool isResetTimer;
@@ -21,6 +26,12 @@ public class ClearFood : MonoBehaviour
     void Start()
     {
         inventory = Inventory.instance;
+
+        if (GetComponent<Renderer>() != null)
+        {
+            myRenderer = GetComponent<Renderer>();
+            oriMat = myRenderer.material;
+        }
 
         isGaze = false;
     }
@@ -48,8 +59,10 @@ public class ClearFood : MonoBehaviour
         {
             //Fill loading UI
             gvrTimer += Time.deltaTime;
-            imgGaze.fillAmount = gvrTimer / 2f;
+            imgGaze.fillAmount = gvrTimer / 3f;
         }
+
+        OutlineWhenGaze();
 
         if (isGaze)
         {
@@ -63,7 +76,7 @@ public class ClearFood : MonoBehaviour
             {
                 timer += Time.deltaTime;
 
-                if (timer - startTime >= 2)
+                if (timer - startTime >= 3)
                 {
                     isGaze = false;
                     startTime = 0;
@@ -74,6 +87,7 @@ public class ClearFood : MonoBehaviour
                     gvrTimer = 0;
                     imgGaze.fillAmount = 0;
 
+                    //Clear the food(s) in inventory if player make mistake on the ingredient and wish to retry
                     inventory.ClearFoods();
                 }
             }
@@ -86,4 +100,20 @@ public class ClearFood : MonoBehaviour
 
         }
     }
+
+    private void OutlineWhenGaze()
+    {
+        if (gazeMat != null)
+        {
+            if (isGaze)
+            {
+                myRenderer.material = gazeMat;
+            }
+            else
+            {
+                myRenderer.material = oriMat;
+            }
+        }
+    }
+
 }

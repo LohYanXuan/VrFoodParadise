@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class CheckOutButton : MonoBehaviour
 {
     Inventory inventory;
-    [SerializeField] private GameObject food;
+    [SerializeField] private GameObject foodForThisStore;
+    private GameObject food;
 
     [SerializeField] private Collider storeCollider;
     [SerializeField] private GameObject menuPanel;
@@ -101,10 +102,14 @@ public class CheckOutButton : MonoBehaviour
 
     private void AssignRecipe()
     {
+        //Instantiate new gameObject to avoid list being overwrite by instantiating new list
+        food = (GameObject)Instantiate(foodForThisStore);
+
         FoodRecipe foodRecipe = food.GetComponent<FoodRecipe>();
 
         for (int i = 0; i < inventory.ingredients.Count; i++)
         {
+            //Let "food" has a copy of the list of all the ingredients
             foodRecipe.ingredientInIt.Add(inventory.ingredients[i].GetComponent<GazeMenu>().tagName.ToString());
         }
 
