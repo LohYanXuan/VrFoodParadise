@@ -6,6 +6,8 @@ using System.Collections;
 
 public class Customer : MonoBehaviour
 {
+    Inventory inventory;
+
     [Header("Customer's Order")]
     //public int shuffle;
     [SerializeField] int minOrder = 3, maxOrder = 7;
@@ -51,8 +53,14 @@ public class Customer : MonoBehaviour
     List<string> ingredients = new List<string> { "Bun", "Sauce", "Tomato", "Meat", "Lettuce", "Cheese", "Egg" };
     List<int> iQuantity = new List<int>();
 
+    //Public for checking with inventory
+    public List<string> cusOrder;
+    private bool isCompleteOrder = false;
+
     void Awake()
     {
+        inventory = Inventory.instance;
+
         hasOrder = false;
         countdownRunning = false;
         customerCanvas.SetActive(false);
@@ -95,7 +103,16 @@ public class Customer : MonoBehaviour
             }
         }
 
+        //Check customer order
+        if (hasOrder)
+        {
+            isCompleteOrder = inventory.CheckCustomerOrder(cusOrder);
 
+            if (isCompleteOrder)
+            {
+                inventory.ClearFoods();
+            }
+        }
     }
     public void GVROn()
     {
@@ -126,9 +143,9 @@ public class Customer : MonoBehaviour
     /// <param name="count"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    List<T> GetRandomIngredients<T>(List<T> ingredients, int count)
+    List<string> GetRandomIngredients(List<string> ingredients, int count)
     {
-        List<T> cusOrder = new List<T>();
+        cusOrder = new List<string>();
         for (int i = 0; i < count; i++)
         {
             int index = Random.Range(0, ingredients.Count);

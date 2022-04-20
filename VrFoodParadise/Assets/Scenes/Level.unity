@@ -29818,10 +29818,11 @@ MonoBehaviour:
   player: {fileID: 1253526375}
   rotateSpeed: 1
   totalTime: 2
-  totalSeconds: 5
+  totalSeconds: 60
   uiFillImage: {fileID: 409078212}
   uiText: {fileID: 1515666247}
   timerObj: {fileID: 670236652}
+  cusOrder: []
 --- !u!114 &2126605918
 MonoBehaviour:
   m_ObjectHideFlags: 0

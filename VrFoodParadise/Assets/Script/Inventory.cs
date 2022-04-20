@@ -38,9 +38,9 @@ public class Inventory : MonoBehaviour
             ClearFoods();
         }
 
-        Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[0]);
-        Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[1]);
-        Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[2]);
+        //Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[0]);
+        //Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[1]);
+        //Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[2]);
     }
 
     public void InsertFoods(GameObject objects)
@@ -78,5 +78,49 @@ public class Inventory : MonoBehaviour
     {
         Destroy(list[index]);
         list.RemoveAt(index);
+    }
+
+    public bool CheckCustomerOrder(List<string> cusOrder)
+    {
+        int i, j, k;
+
+        for (i = 0; i < foods.Count; i++)
+        {
+            FoodRecipe foodRecipe = foods[i].GetComponent<FoodRecipe>();
+            List<string> tempList = new List<string>(foodRecipe.ingredientInIt);
+
+            //If the amount of ingredients in food is same with customer's order
+            if (foodRecipe.ingredientInIt.Count == cusOrder.Count)
+            {
+                //Go through cutomer order one by one
+                for (j = 0; j < cusOrder.Count; j++)
+                {
+                    for (k = 0; k < tempList.Count; k++)
+                    {
+                        if (cusOrder[j] == tempList[k])
+                        {
+                            //Remove when same ingredient is found
+                            tempList.RemoveAt(k);
+
+                            //After all same ingredients are removed, means all ingredients are correct
+                            if (tempList.Count == 0)
+                            {
+                                return true;
+                            }
+
+                            //Quit current loop and go to next element in customer order
+                            break;
+                        }
+                        if (k++ >= tempList.Count)
+                        {
+                            //Go through all ingredients in food but still doesn't match customer order
+                            //End checking
+                            j = cusOrder.Count;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
