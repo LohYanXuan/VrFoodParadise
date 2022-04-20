@@ -30,12 +30,18 @@ public class Customer : MonoBehaviour
     float gvrTimer;
 
     [Header("Timer UI")]
-    [SerializeField] float totalSeconds = 0;
-    float elapsedSeconds = 0;
-    bool running = false;
+    [SerializeField] float totalSeconds;
+    private float oriTotalSeconds;
+    float elapsedSeconds;
+    bool countdownRunning = false;
     [SerializeField] private Image uiFillImage;
     [SerializeField] private TextMeshProUGUI uiText;
-    
+    [SerializeField] private GameObject timerObj;
+
+    //Random angry text
+    private string[] texts = new string[] { "My grandmother also cook faster than you!!!", 
+                                            "I won't visit this place again!!!", 
+                                            "Fuck this place,I'm out!!" };
 
     //List is for customer to store & output their orders
     // Orders are randomly churned. Randomness affects 
@@ -48,12 +54,15 @@ public class Customer : MonoBehaviour
     void Awake()
     {
         hasOrder = false;
+        countdownRunning = false;
         customerCanvas.SetActive(false);
         customerOriginalTransform = this.gameObject.transform;
+        ResetTimer();   //initialise countdown timer value
     }
 
     void Update()
     {
+
         if (gvrStatus)
         {
             gvrTimer += Time.deltaTime;
@@ -65,19 +74,28 @@ public class Customer : MonoBehaviour
                 {
                     hasOrder = true; 
                     PrintOrder();
-                    running = true;
+                    countdownRunning = true;
                 }
             }
         }
-        //if (running)
-        //{
-        //    elapsedSeconds += Time.deltaTime;
-        //    if (elapsedSeconds >= totalSeconds)
-        //    {
-        //        running = false;
-        //        //Run();
-        //    }
-        //}
+
+        if (countdownRunning)
+        {
+            timerObj.SetActive(true);
+            timerObj.transform.LookAt(player.transform);
+            //Display timer UI
+            DisplayTime(totalSeconds);
+
+            //countdown timer
+            totalSeconds -= Time.deltaTime;
+            if (totalSeconds <= elapsedSeconds)
+            {
+                countdownRunning = false;
+                CustomerGetAngry();
+            }
+        }
+
+
     }
     public void GVROn()
     {
@@ -98,16 +116,6 @@ public class Customer : MonoBehaviour
         StopCoroutine(LookCoroutine);       //stop lookat coroutine
         LookAwayPlayer();       //look away from player
 
-    }
-    void Run()
-    {
-        if (totalSeconds > 0)
-        {
-            running = true;
-
-            elapsedSeconds = 0;
-            PrintOrder();
-        }
     }
 
     /// <summary>
@@ -196,11 +204,36 @@ public class Customer : MonoBehaviour
         }
     }
 
+    //Initialise timer value
     private void ResetTimer()
     {
-        uiText.text = "00:00";
-        uiFillImage.fillAmount = 0f;
+        elapsedSeconds = 0;
+        oriTotalSeconds = totalSeconds;
+        timerObj.SetActive(false);
+    }
 
-        
+    //Display timer UI
+    private void DisplayTime(float timeToDisplay)
+    {
+        if (timeToDisplay < 0)
+        {
+            timeToDisplay = 0;
+        }
+
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+
+        uiText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        uiFillImage.fillAmount = totalSeconds / oriTotalSeconds;
+    }
+
+    //Display UI when customer gets angry and leave the place
+    private void CustomerGetAngry()
+    {
+        customerCanvas.SetActive(true);
+        LookatPlayer();
+        string currentText = texts[Random.Range(0, texts.Length)];
+        customerOrderText.text = currentText;
+        Destroy(gameObject,3f);
     }
 }
