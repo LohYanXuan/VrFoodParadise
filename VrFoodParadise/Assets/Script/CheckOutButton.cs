@@ -23,6 +23,7 @@ public class CheckOutButton : MonoBehaviour
     float gvrTimer;
     [SerializeField] private Image imgGaze;
 
+    public GameObject[] gazeMenuScript;
     public void SetGazeAt(bool gazeAt)
     {
         isGaze = gazeAt;
@@ -51,6 +52,7 @@ public class CheckOutButton : MonoBehaviour
         isResetTimer = false;
         isGaze = false;
         gvrStatus = false;
+        gazeMenuScript = GameObject.FindGameObjectsWithTag("OrderNumber");
     }
 
     void Update()
@@ -89,6 +91,7 @@ public class CheckOutButton : MonoBehaviour
                     AssignRecipe();
                     menuPanel.SetActive(false);
                     storeCollider.enabled = true;
+                    ClearAllIngredentCount();
                 }
             }
         }
@@ -115,5 +118,14 @@ public class CheckOutButton : MonoBehaviour
 
         inventory.InsertFoods(food);
         inventory.ClearIngredients();
+    }
+
+    private void ClearAllIngredentCount()
+    {
+        foreach (GameObject amount in gazeMenuScript)
+        {
+            GazeMenu temp = amount.GetComponent<GazeMenu>();
+            temp.ingredentCount = 0;
+        }
     }
 }

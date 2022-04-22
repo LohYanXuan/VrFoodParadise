@@ -6,7 +6,7 @@ using System.Collections;
 
 public class Customer : MonoBehaviour
 {
-    Inventory inventory;
+    //Inventory inventory;
 
     [Header("Customer's Order")]
     //public int shuffle;
@@ -30,6 +30,7 @@ public class Customer : MonoBehaviour
     [SerializeField] private float totalTime = 2;
     bool gvrStatus;
     float gvrTimer;
+    [SerializeField] private Image imgGaze;
 
     [Header("Timer UI")]
     [SerializeField] float totalSeconds;
@@ -41,9 +42,15 @@ public class Customer : MonoBehaviour
     [SerializeField] private GameObject timerObj;
 
     //Random angry text
-    private string[] texts = new string[] { "My grandmother also cook faster than you!!!", 
-                                            "I won't visit this place again!!!", 
-                                            "Fuck this place,I'm out!!" };
+    private string[] angryTexts = new string[] { "My grandmother also cook faster than you!!!", 
+                                                 "I won't visit this place again!!!", 
+                                                 "Fuck this place,I'm out!!",
+                                                 "Never met such noob player like you before..."};
+    //Random satisfy, happy text
+    private string[] happyTexts = new string[] {"Thank you <3",
+                                                "You are so smart,I like it.",
+                                                "OMG!!Albert Einstein is still alive. He is playing VR Food Paradise.",
+                                                "Well done. Nanti give you $100 extra tips."};
 
     //List is for customer to store & output their orders
     // Orders are randomly churned. Randomness affects 
@@ -59,7 +66,7 @@ public class Customer : MonoBehaviour
 
     void Awake()
     {
-        inventory = Inventory.instance;
+        //inventory = Inventory.instance;
 
         hasOrder = false;
         countdownRunning = false;
@@ -70,20 +77,30 @@ public class Customer : MonoBehaviour
 
     void Update()
     {
-
         if (gvrStatus)
         {
             gvrTimer += Time.deltaTime;
-
+            imgGaze.fillAmount = gvrTimer / totalTime;
             if (gvrTimer >= totalTime)
             {
-                customerCanvas.SetActive(true);
+                
                 if (!hasOrder)
-                {
-                    hasOrder = true; 
+                {    
                     PrintOrder();
                     countdownRunning = true;
+                    hasOrder = true;
                 }
+                else                //Check customer order
+                {
+                    isCompleteOrder = Inventory.instance.CheckCustomerOrder(cusOrder);
+
+                    if (isCompleteOrder)
+                    {
+                        Inventory.instance.ClearFoods();
+                        CustomerSatisfy();
+                    }
+                }
+                customerCanvas.SetActive(true);
             }
         }
 
@@ -100,17 +117,6 @@ public class Customer : MonoBehaviour
             {
                 countdownRunning = false;
                 CustomerGetAngry();
-            }
-        }
-
-        //Check customer order
-        if (hasOrder)
-        {
-            isCompleteOrder = inventory.CheckCustomerOrder(cusOrder);
-
-            if (isCompleteOrder)
-            {
-                inventory.ClearFoods();
             }
         }
     }
@@ -132,6 +138,7 @@ public class Customer : MonoBehaviour
         customerCanvas.SetActive(false);
         StopCoroutine(LookCoroutine);       //stop lookat coroutine
         LookAwayPlayer();       //look away from player
+        imgGaze.fillAmount = 0;
 
     }
 
@@ -249,8 +256,17 @@ public class Customer : MonoBehaviour
     {
         customerCanvas.SetActive(true);
         LookatPlayer();
-        string currentText = texts[Random.Range(0, texts.Length)];
+        string currentText = angryTexts[Random.Range(0, angryTexts.Length)];
         customerOrderText.text = currentText;
         Destroy(gameObject,3f);
+    }
+
+    //Display UI when customer gets thier order correctly and leave the place
+    private void CustomerSatisfy()
+    {
+        //customerCanvas.SetActive(true);
+        string currentText = happyTexts[Random.Range(0, happyTexts.Length)];
+        customerOrderText.text = currentText;
+        Destroy(gameObject, 3f);
     }
 }

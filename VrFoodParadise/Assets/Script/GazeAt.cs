@@ -25,6 +25,10 @@ public abstract class GazeAt : MonoBehaviour
     float gvrTimer;
     public Image imgGaze;
 
+    //ingredent amount
+    [HideInInspector]
+    public int ingredentCount = 0;
+
     public void Initialize()
     {
         inventory = Inventory.instance;
@@ -112,6 +116,7 @@ public abstract class GazeAt : MonoBehaviour
                     if (inventoryType == listType.ingredient)
                     {
                         inventory.InsertIngredients(this.gameObject);
+                        ingredentCount++;
                     }
 
                     //Reset timer for keep gazing at same thing

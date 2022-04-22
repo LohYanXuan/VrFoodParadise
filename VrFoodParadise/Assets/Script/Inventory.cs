@@ -24,6 +24,10 @@ public class Inventory : MonoBehaviour
     [Header("Ingredient list")]
     public List<GameObject> ingredients = new List<GameObject>();
 
+    [Header("Game Score")]
+    public int totalScore = 0;
+
+
     int i = 0;
 
     void Start()
