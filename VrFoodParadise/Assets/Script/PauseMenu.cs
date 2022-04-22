@@ -18,11 +18,13 @@ public class PauseMenu : MonoBehaviour
     {
         pauseUI.SetActive(false);
         isOpen = false;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Cursor.visible = false;
         if (Input.GetButtonUp("Option"))
         {
             if (isOpen == false)
