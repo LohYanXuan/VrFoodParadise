@@ -106,6 +106,7 @@ public class Inventory : MonoBehaviour
                             //After all same ingredients are removed, means all ingredients are correct
                             if (tempList.Count == 0)
                             {
+                                ListRemoveAtIndex(foods, i);
                                 return true;
                             }
 

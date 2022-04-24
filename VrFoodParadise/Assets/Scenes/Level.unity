@@ -36263,7 +36263,7 @@ MonoBehaviour:
   rotateSpeed: 1
   totalTime: 2
   imgGaze: {fileID: 1501569136}
-  totalSeconds: 60
+  totalSeconds: 120
   uiFillImage: {fileID: 409078212}
   uiText: {fileID: 1515666247}
   timerObj: {fileID: 670236652}

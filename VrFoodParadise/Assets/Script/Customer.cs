@@ -96,7 +96,7 @@ public class Customer : MonoBehaviour
 
                     if (isCompleteOrder)
                     {
-                        Inventory.instance.ClearFoods();
+                        //Inventory.instance.ClearFoods();
                         CustomerSatisfy();
                     }
                 }
