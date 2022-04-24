@@ -155,7 +155,22 @@ public class Customer : MonoBehaviour
         cusOrder = new List<string>();
         for (int i = 0; i < count; i++)
         {
-            int index = Random.Range(0, ingredients.Count);
+            int index;
+            if (i == 0)
+            {
+                //Bun at first (top layer)
+                index = 0;
+            }
+            else if (i == count - 1)
+            {
+                //Bun at last (bottom layer)
+                index = 0;
+            }
+            else
+            {
+                //Anything in the middle
+                index = Random.Range(0, ingredients.Count);
+            }
             cusOrder.Add(ingredients[index]);
         }
         return cusOrder;
