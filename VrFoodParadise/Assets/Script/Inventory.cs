@@ -19,7 +19,8 @@ public class Inventory : MonoBehaviour
     #endregion
 
     [Header("Food list")]
-    public List<GameObject> foods = new List<GameObject>();
+    //public List<GameObject> foods = new List<GameObject>();
+    public GameObject foods;
     
     [Header("Ingredient list")]
     public List<GameObject> ingredients = new List<GameObject>();
@@ -46,17 +47,15 @@ public class Inventory : MonoBehaviour
 
     public void InsertFoods(GameObject objects)
     {
-        foods.Add(objects);
+        //foods.Add(objects);
+        foods = objects;
     }
 
     public void ClearFoods()
     {
-        //for (i = 0; i < foods.Count; i++)
-        //{
-        //    foods[i].gameObject.SetActive(true);
-        //}
-
-        foods.Clear();
+        //foods.Clear();
+        Destroy(foods);
+        foods = null;
     }
 
     public void InsertIngredients(GameObject objects)
@@ -85,9 +84,9 @@ public class Inventory : MonoBehaviour
     {
         int i, j, k;
 
-        for (i = 0; i < foods.Count; i++)
-        {
-            FoodRecipe foodRecipe = foods[i].GetComponent<FoodRecipe>();
+        //for (i = 0; i < foods.Count; i++)
+        //{
+            FoodRecipe foodRecipe = foods.GetComponent<FoodRecipe>();
             List<string> tempList = new List<string>(foodRecipe.ingredientInIt);
 
             //If the amount of ingredients in food is same with customer's order
@@ -106,7 +105,8 @@ public class Inventory : MonoBehaviour
                             //After all same ingredients are removed, means all ingredients are correct
                             if (tempList.Count == 0)
                             {
-                                ListRemoveAtIndex(foods, i);
+                                //ListRemoveAtIndex(foods, i);
+                                ClearFoods();
                                 return true;
                             }
 
@@ -122,7 +122,7 @@ public class Inventory : MonoBehaviour
                     }
                 }
             }
-        }
+        //}
         return false;
     }
 }
