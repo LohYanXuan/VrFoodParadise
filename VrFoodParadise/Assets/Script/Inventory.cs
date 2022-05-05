@@ -89,39 +89,41 @@ public class Inventory : MonoBehaviour
             FoodRecipe foodRecipe = foods.GetComponent<FoodRecipe>();
             List<string> tempList = new List<string>(foodRecipe.ingredientInIt);
 
-            //If the amount of ingredients in food is same with customer's order
-            if (foodRecipe.ingredientInIt.Count == cusOrder.Count)
+        //If the amount of ingredients in food is same with customer's order
+        if (foodRecipe.ingredientInIt.Count == cusOrder.Count)
+        {
+            //Go through cutomer order one by one
+            for (j = 0; j < cusOrder.Count; j++)
             {
-                //Go through cutomer order one by one
-                for (j = 0; j < cusOrder.Count; j++)
+                for (k = 0; k < tempList.Count; k++)
                 {
-                    for (k = 0; k < tempList.Count; k++)
+                    if (cusOrder[j] == tempList[k])
                     {
-                        if (cusOrder[j] == tempList[k])
-                        {
-                            //Remove when same ingredient is found
-                            tempList.RemoveAt(k);
+                        //Remove when same ingredient is found
+                        tempList.RemoveAt(k);
 
-                            //After all same ingredients are removed, means all ingredients are correct
-                            if (tempList.Count == 0)
-                            {
-                                //ListRemoveAtIndex(foods, i);
-                                ClearFoods();
-                                return true;
-                            }
-
-                            //Quit current loop and go to next element in customer order
-                            break;
-                        }
-                        if (k++ >= tempList.Count)
+                        //After all same ingredients are removed, means all ingredients are correct
+                        if (tempList.Count == 0)
                         {
-                            //Go through all ingredients in food but still doesn't match customer order
-                            //End checking
-                            j = cusOrder.Count;
+                            //ListRemoveAtIndex(foods, i);
+                            ClearFoods();
+                            return true;
                         }
+
+                        //Quit current loop and go to next element in customer order
+                        break;
+                    }
+                    if (k++ >= tempList.Count)
+                    {
+                        //Go through all ingredients in food but still doesn't match customer order
+                        //End checking
+                        j = cusOrder.Count;
                     }
                 }
             }
+        }
+        else
+            Debug.Log("AAAAAAAAAAAAAAAAAAAAA");
         //}
         return false;
     }
