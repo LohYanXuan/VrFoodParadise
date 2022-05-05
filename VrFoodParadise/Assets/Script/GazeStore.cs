@@ -20,10 +20,10 @@ public class GazeStore : GazeAt
 
     void Update()
     {
-        if (inventory.foods == null)
-        {
+        //if (inventory.foods == null)
+        //{
             CloseCollider(storeCollider);
-        }
+        //}
 
         if (storeCollider.enabled)
         {
