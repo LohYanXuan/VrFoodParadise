@@ -19,8 +19,8 @@ public class Inventory : MonoBehaviour
     #endregion
 
     [Header("Food list")]
-    //public List<GameObject> foods = new List<GameObject>();
-    public GameObject foods;
+    public List<GameObject> foods = new List<GameObject>();
+    //public GameObject foods;
     
     [Header("Ingredient list")]
     public List<GameObject> ingredients = new List<GameObject>();
@@ -47,15 +47,15 @@ public class Inventory : MonoBehaviour
 
     public void InsertFoods(GameObject objects)
     {
-        //foods.Add(objects);
-        foods = objects;
+        foods.Add(objects);
+        //foods = objects;
     }
 
     public void ClearFoods()
     {
-        //foods.Clear();
-        Destroy(foods);
-        foods = null;
+        foods.Clear();
+        //Destroy(foods);
+        //foods = null;
     }
 
     public void InsertIngredients(GameObject objects)
@@ -84,47 +84,45 @@ public class Inventory : MonoBehaviour
     {
         int i, j, k;
 
-        //for (i = 0; i < foods.Count; i++)
-        //{
-            FoodRecipe foodRecipe = foods.GetComponent<FoodRecipe>();
+        for (i = 0; i < foods.Count; i++)
+        {
+            FoodRecipe foodRecipe = foods[i].GetComponent<FoodRecipe>();
             List<string> tempList = new List<string>(foodRecipe.ingredientInIt);
 
-        //If the amount of ingredients in food is same with customer's order
-        if (foodRecipe.ingredientInIt.Count == cusOrder.Count)
-        {
-            //Go through cutomer order one by one
-            for (j = 0; j < cusOrder.Count; j++)
+            //If the amount of ingredients in food is same with customer's order
+            if (foodRecipe.ingredientInIt.Count == cusOrder.Count)
             {
-                for (k = 0; k < tempList.Count; k++)
+                //Go through cutomer order one by one
+                for (j = 0; j < cusOrder.Count; j++)
                 {
-                    if (cusOrder[j] == tempList[k])
+                    for (k = 0; k < tempList.Count; k++)
                     {
-                        //Remove when same ingredient is found
-                        tempList.RemoveAt(k);
-
-                        //After all same ingredients are removed, means all ingredients are correct
-                        if (tempList.Count == 0)
+                        if (cusOrder[j] == tempList[k])
                         {
-                            //ListRemoveAtIndex(foods, i);
-                            ClearFoods();
-                            return true;
-                        }
+                            //Remove when same ingredient is found
+                            tempList.RemoveAt(k);
 
-                        //Quit current loop and go to next element in customer order
-                        break;
-                    }
-                    if (k++ >= tempList.Count)
-                    {
-                        //Go through all ingredients in food but still doesn't match customer order
-                        //End checking
-                        j = cusOrder.Count;
+                            //After all same ingredients are removed, means all ingredients are correct
+                            if (tempList.Count == 0)
+                            {
+                                ListRemoveAtIndex(foods, i);
+                                //ClearFoods();
+                                return true;
+                            }
+
+                            //Quit current loop and go to next element in customer order
+                            break;
+                        }
+                        if (k++ >= tempList.Count)
+                        {
+                            //Go through all ingredients in food but still doesn't match customer order
+                            //End checking
+                            j = cusOrder.Count;
+                        }
                     }
                 }
             }
         }
-        else
-            Debug.Log("AAAAAAAAAAAAAAAAAAAAA");
-        //}
         return false;
     }
 }
