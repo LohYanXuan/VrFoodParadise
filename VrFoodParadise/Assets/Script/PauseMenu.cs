@@ -8,7 +8,6 @@ public class PauseMenu : MonoBehaviour
     public int totalScore = 0;
 
     [Header("Pause Menu")]
-    public GvrPointerInputModule gvrInputScript;
     [SerializeField] private GameObject pauseUI;
     private bool isOpen;
 
@@ -18,7 +17,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseUI.SetActive(false);
         isOpen = false;
-        Cursor.visible = false;
+        //Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -41,14 +40,12 @@ public class PauseMenu : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0;
-        gvrInputScript.enabled = false;
         pauseUI.SetActive(true);
         isOpen = true;
     }
     public void ResumeGame()
     {
         Time.timeScale = 1;
-        gvrInputScript.enabled = true;
         pauseUI.SetActive(false);
         isOpen = false;
     }
