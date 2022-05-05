@@ -41,6 +41,8 @@ public class Customer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI uiText;
     [SerializeField] private GameObject timerObj;
 
+    public int addPoint;
+
     //Random angry text
     private string[] angryTexts = new string[] { "My grandmother also cook faster than you!!!", 
                                                  "I won't visit this place again!!!", 
@@ -282,6 +284,12 @@ public class Customer : MonoBehaviour
         //customerCanvas.SetActive(true);
         string currentText = happyTexts[Random.Range(0, happyTexts.Length)];
         customerOrderText.text = currentText;
+        StorePoint();
         Destroy(gameObject, 3f);
+    }
+
+    public void StorePoint()
+    {
+        addPoint += Inventory.instance.score;
     }
 }

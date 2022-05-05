@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -24,13 +25,14 @@ public class Inventory : MonoBehaviour
     
     [Header("Ingredient list")]
     public List<GameObject> ingredients = new List<GameObject>();
-
+    public int score;
+    public Text scoreText; 
 
     int i = 0;
 
     void Start()
     {
-        
+        scoreText.text = "";
     }
 
     void Update()
@@ -39,7 +41,7 @@ public class Inventory : MonoBehaviour
         {
             ClearFoods();
         }
-
+        scoreText.text = "" + score;
         //Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[0]);
         //Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[1]);
         //Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[2]);
