@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class QuitGame : MonoBehaviour
+public class PlayGame : MonoBehaviour
 {
     //Gaze at variable
     [Header("GazeTime")]
@@ -11,11 +9,16 @@ public class QuitGame : MonoBehaviour
     bool gvrStatus;
     float gvrTimer;
     [SerializeField] private Image imgGaze;
+    [SerializeField] private GameObject mainMenuUI;
+    [SerializeField] private GameObject levelSelectionUI;
+    private bool canOpen = false;
 
     // Start is called before the first frame update
     void Start()
     {
         gvrStatus = false;
+        levelSelectionUI.SetActive(false);
+        mainMenuUI.SetActive(true);
     }
 
     // Update is called once per frame
@@ -27,8 +30,14 @@ public class QuitGame : MonoBehaviour
             imgGaze.fillAmount = gvrTimer / totalTime;
             if (gvrTimer >= totalTime)
             {
-                Application.Quit();
+                canOpen = true;
+                GVROff();
             }
+        }
+
+        if (canOpen)
+        {
+            OpenUI();
         }
     }
 
@@ -42,7 +51,12 @@ public class QuitGame : MonoBehaviour
         gvrStatus = false;
         gvrTimer = 0;
         imgGaze.fillAmount = 0;
-
     }
 
+    private void OpenUI()
+    {
+        levelSelectionUI.SetActive(true);
+        mainMenuUI.SetActive(false);
+        canOpen = false;
+    }
 }
