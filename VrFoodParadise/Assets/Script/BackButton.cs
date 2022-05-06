@@ -21,6 +21,8 @@ public class BackButton : MonoBehaviour
     float gvrTimer;
     public Image imgGaze;
 
+    public GameObject[] gazeMenuScript;
+
     public void SetGazeAt(bool gazeAt)
     {
         isGaze = gazeAt;
@@ -49,6 +51,7 @@ public class BackButton : MonoBehaviour
         isResetTimer = false;
         isGaze = false;
         gvrStatus = false;
+        gazeMenuScript = GameObject.FindGameObjectsWithTag("OrderNumber");
     }
 
     void Update()
@@ -85,6 +88,7 @@ public class BackButton : MonoBehaviour
                     imgGaze.fillAmount = 0;
 
                     inventory.ClearIngredients();
+                    ClearAllIngredentCount();
                     menuPanel.SetActive(false);
                     storeCollider.enabled = true;
                 }
@@ -95,6 +99,15 @@ public class BackButton : MonoBehaviour
             startTime = 0;
             timer = 0;
             isResetTimer = false;
+        }
+    }
+
+    private void ClearAllIngredentCount()
+    {
+        foreach (GameObject amount in gazeMenuScript)
+        {
+            GazeMenu temp = amount.GetComponent<GazeMenu>();
+            temp.ingredentCount = 0;
         }
     }
 }

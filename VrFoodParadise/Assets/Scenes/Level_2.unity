@@ -48764,6 +48764,7 @@ MonoBehaviour:
   storeCollider: {fileID: 952216322}
   menuPanel: {fileID: 816271023}
   imgGaze: {fileID: 636005248}
+  gazeMenuScript: []
 --- !u!114 &1774311363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54903,6 +54904,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2054173371}
   - component: {fileID: 2054173370}
+  - component: {fileID: 2054173372}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -54985,6 +54987,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &2054173372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054173369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf38460f63d438e4f85e08928d3a7a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winUI: {fileID: 0}
+  loseUI: {fileID: 0}
 --- !u!1001 &2057965409
 PrefabInstance:
   m_ObjectHideFlags: 0

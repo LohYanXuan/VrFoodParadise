@@ -31989,7 +31989,7 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 3.8
+  m_Height: 3.2
   m_Radius: 0.6
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -50180,6 +50180,7 @@ MonoBehaviour:
   storeCollider: {fileID: 1848708352}
   menuPanel: {fileID: 741264341}
   imgGaze: {fileID: 1477852006}
+  gazeMenuScript: []
 --- !u!114 &1846880291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51195,6 +51196,7 @@ GameObject:
   - component: {fileID: 1891105179}
   - component: {fileID: 1891105178}
   - component: {fileID: 1891105177}
+  - component: {fileID: 1891105180}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -51245,6 +51247,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1891105180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891105176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf38460f63d438e4f85e08928d3a7a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winUI: {fileID: 0}
+  loseUI: {fileID: 0}
 --- !u!1 &1893793426
 GameObject:
   m_ObjectHideFlags: 0
