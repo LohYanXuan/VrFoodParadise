@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    [Header("Game Score")]
-    public int totalScore = 0;
-
     [Header("Pause Menu")]
     [SerializeField] private GameObject pauseUI;
     private bool isOpen;

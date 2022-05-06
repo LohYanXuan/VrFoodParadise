@@ -25,6 +25,8 @@ public class Inventory : MonoBehaviour
     
     [Header("Ingredient list")]
     public List<GameObject> ingredients = new List<GameObject>();
+
+    [Header("Game Score")]
     public int score;
     public Text scoreText; 
 

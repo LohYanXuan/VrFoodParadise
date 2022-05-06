@@ -99,6 +99,7 @@ public class Customer : MonoBehaviour
                     if (isCompleteOrder)
                     {
                         //Inventory.instance.ClearFoods();
+                        StorePoint();
                         CustomerSatisfy();
                     }
                 }
@@ -284,12 +285,11 @@ public class Customer : MonoBehaviour
         //customerCanvas.SetActive(true);
         string currentText = happyTexts[Random.Range(0, happyTexts.Length)];
         customerOrderText.text = currentText;
-        StorePoint();
         Destroy(gameObject, 3f);
     }
 
     public void StorePoint()
     {
-        addPoint += Inventory.instance.score;
+        Inventory.instance.score += addPoint;
     }
 }

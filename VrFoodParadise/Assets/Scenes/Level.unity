@@ -5433,7 +5433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f51f2201e2b1c46bf5318a8e87cb24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foods: {fileID: 0}
+  foods: []
   ingredients: []
   score: 0
   scoreText: {fileID: 582854046}
@@ -5463,7 +5463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6144d0910eae9c747a275cb8623c80fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalScore: 0
   pauseUI: {fileID: 12405880}
 --- !u!1001 &186021437
 PrefabInstance:
@@ -56058,7 +56057,7 @@ MonoBehaviour:
   uiFillImage: {fileID: 409078212}
   uiText: {fileID: 1515666247}
   timerObj: {fileID: 670236652}
-  addPoint: 0
+  addPoint: 10
   cusOrder: []
 --- !u!114 &2126605918
 MonoBehaviour:
