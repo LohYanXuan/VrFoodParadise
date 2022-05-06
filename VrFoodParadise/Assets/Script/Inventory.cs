@@ -117,12 +117,12 @@ public class Inventory : MonoBehaviour
                             //Quit current loop and go to next element in customer order
                             break;
                         }
-                        if (k++ >= tempList.Count)
-                        {
-                            //Go through all ingredients in food but still doesn't match customer order
-                            //End checking
-                            j = cusOrder.Count;
-                        }
+                        //if (k++ >= tempList.Count)
+                        //{
+                        //    //Go through all ingredients in food but still doesn't match customer order
+                        //    //End checking
+                        //    j = cusOrder.Count;
+                        //}
                     }
                 }
             }

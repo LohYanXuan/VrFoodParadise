@@ -56044,7 +56044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minOrder: 2
-  maxOrder: 3
+  maxOrder: 4
   minQ: 1
   maxQ: 2
   customerOrderText: {fileID: 690131028}
