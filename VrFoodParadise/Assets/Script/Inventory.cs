@@ -28,13 +28,15 @@ public class Inventory : MonoBehaviour
 
     [Header("Game Score")]
     public int score;
-    public Text scoreText; 
+    public Text scoreText;
+    public Text finalScoreText;
 
     int i = 0;
 
     void Start()
     {
         scoreText.text = "";
+        finalScoreText.text = "";
     }
 
     void Update()
@@ -44,6 +46,7 @@ public class Inventory : MonoBehaviour
             ClearFoods();
         }
         scoreText.text = "" + score;
+        finalScoreText.text = score.ToString();
         //Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[0]);
         //Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[1]);
         //Debug.Log(foods[0].GetComponent<FoodRecipe>().ingredientInIt[2]);
